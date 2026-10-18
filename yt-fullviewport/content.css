@@ -1,0 +1,158 @@
+/* Active only while <html> has the .ytfv-on class (set by content.js on /watch pages) */
+
+html.ytfv-on,
+html.ytfv-on body {
+  overflow: hidden !important;
+}
+
+/* Hide the top bar so the video can use the full height */
+html.ytfv-on ytd-masthead,
+html.ytfv-on #cinematics {
+  display: none !important;
+}
+
+/* Hide everything below/beside the player (title, channel, buttons, related, comments).
+   Kept in the DOM (just invisible) so YouTube still loads recommendations for the shelf. */
+html.ytfv-on ytd-watch-metadata,
+html.ytfv-on #below,
+html.ytfv-on #secondary,
+html.ytfv-on #comments,
+html.ytfv-on ytd-comments,
+html.ytfv-on #panels,
+html.ytfv-on ytd-engagement-panel-section-list-renderer {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Pin the player to the viewport */
+html.ytfv-on #movie_player {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  z-index: 2147483000 !important;
+  background: #000 !important;
+}
+
+html.ytfv-on #movie_player .html5-video-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html.ytfv-on #movie_player video.html5-main-video {
+  width: 100% !important;
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  object-fit: contain !important;
+}
+
+/* YouTube sets the control bar width in pixels; override it */
+html.ytfv-on #movie_player .ytp-chrome-bottom {
+  width: calc(100% - 24px) !important;
+  left: 12px !important;
+}
+
+/* Cursor at the far left/right edge: hide the whole player overlay and the cursor */
+html.ytfv-on.ytfv-edge #movie_player .ytp-chrome-bottom,
+html.ytfv-on.ytfv-edge #movie_player .ytp-chrome-top,
+html.ytfv-on.ytfv-edge #movie_player .ytp-gradient-bottom,
+html.ytfv-on.ytfv-edge #movie_player .ytp-gradient-top,
+html.ytfv-on.ytfv-edge #movie_player .ytp-pause-overlay-container,
+html.ytfv-on.ytfv-edge #movie_player .ytp-ce-element,
+html.ytfv-on.ytfv-edge #movie_player .ytp-cards-teaser,
+html.ytfv-on.ytfv-edge #movie_player .ytp-suggested-action,
+html.ytfv-on.ytfv-edge #movie_player .ytp-paid-content-overlay {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+html.ytfv-on.ytfv-edge #movie_player,
+html.ytfv-on.ytfv-edge #movie_player * {
+  cursor: none !important;
+}
+
+/* Our toggle button */
+#ytfv-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+#ytfv-button[aria-pressed="true"] {
+  opacity: 1;
+}
+
+/* TV-style recommendations shelf (scroll down to open) */
+#ytfv-shelf {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2147483001;
+  padding: 56px 0 28px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.92) 35%);
+  transform: translateY(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.25s ease, visibility 0s linear 0.25s;
+}
+
+#ytfv-shelf.ytfv-open {
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.25s ease, visibility 0s;
+}
+
+#ytfv-shelf .ytfv-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 32px;
+  scrollbar-width: none;
+}
+
+#ytfv-shelf .ytfv-row::-webkit-scrollbar {
+  display: none;
+}
+
+#ytfv-shelf .ytfv-card {
+  flex: 0 0 280px;
+  color: #fff;
+  text-decoration: none;
+}
+
+#ytfv-shelf .ytfv-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #222;
+}
+
+#ytfv-shelf .ytfv-card:hover img,
+#ytfv-shelf .ytfv-card:focus img {
+  outline: 3px solid #fff;
+}
+
+#ytfv-shelf .ytfv-title {
+  margin-top: 8px;
+  font: 500 14px/1.35 Roboto, Arial, sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#ytfv-shelf .ytfv-empty {
+  color: #aaa;
+  font: 14px Roboto, Arial, sans-serif;
+  padding: 24px 0;
+}
